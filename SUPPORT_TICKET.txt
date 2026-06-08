@@ -1,0 +1,68 @@
+From: trdefi1985@gmail.com
+Account: Trdefi1985's project (staging, free tier)
+Date: 2026-06-06
+
+Subject: Request: remove 4 staging wallets from dashboard + managed recovery inquiry
+
+Message:
+--------
+
+Hello Crossmint support,
+
+I have 4 testnet wallets in my staging project that I would like to remove from the dashboard view. I created these during API exploration of the Wallets product and they are no longer needed.
+
+1. Wallet: 0xC2Be095bC355Ee44ebcEDFa58a3D760157BA9f9a
+   Owner: email:payram-test-98dc6c7e2139@gmail.com
+   Balance: 10 USDXM (base-sepolia)
+   Admin signer: email OTP (I have email access)
+
+2. Wallet: 0x175DEEe62B630aFbf8134888c85c6FB53E88F86b
+   Owner: email:payram-test-d62174181221@gmail.com
+   Balance: 0 USDXM
+   Admin signer: email OTP
+
+3. Wallet: 0x267c64d8FFe792eAE5263c891a3ba4bB535bBb6A
+   Owner: email:payram-eoa-0d39e253@gmail.com
+   Balance: 10 USDXM (base-sepolia) - LOCKED
+   Admin signer: external-wallet (EOA 0xB29B5823a90201E269dfdb92Ef5dEf0C8cde4789) - EOA private key LOST
+   Recovery signer: NONE configured at creation
+
+4. Wallet: 0x6FD975F533EB30E0980cc5D1C1eEcA1e9CD6273A
+   Owner: email:payram-eoa-00b19fcb@gmail.com
+   Balance: 10 USDXM (base-sepolia) - LOCKED
+   Admin signer: external-wallet (EOA 0xc91FAE9cb6279A2A904f17a1BbFB5af375d4c66f) - EOA private key LOST
+   Recovery signer: NONE configured at creation
+
+These are all base-sepolia test wallets, no real funds, no production impact.
+
+Request 1: Dashboard cleanup
+  - I confirmed there is no DELETE / PATCH / archive endpoint in the Wallets API
+    (probed DELETE/PATCH against /api/2025-06-09/wallets/{locator} and
+    /api/2025-06-09/wallets/{locator}/archive for both V1 and v1-alpha2
+    endpoints, all return 404 "Cannot DELETE").
+  - The smart contracts are ZeroDev Kernel v3.3 proxies and immutable on-chain,
+    which I understand.
+  - Could you remove the wallet records from my project dashboard so they
+    no longer appear in the Wallets > Users view? This is purely a dashboard
+    / database cleanup, not a blockchain action.
+
+Request 2: Managed recovery inquiry
+  - I read the docs about "Managed Support Center Recovery" and understand
+    it is enterprise-only. Wallets 3 and 4 (0x267c, 0x6FD9) are LOCKED because
+    the EOA private keys for their adminSigners were lost during local
+    workspace cleanup, and no recovery signer was configured at creation time.
+  - Total locked amount: 20 USDXM (testnet only, no real value).
+  - I am on the free tier and do not have an enterprise agreement.
+  - Question: Is there any path to assist with the locked 20 USDXM, even
+    on a goodwill basis? If not, I will write off the testnet amount.
+
+Optional info (in case you need to verify the account):
+  - Project: Trdefi1985's project (staging)
+  - Account email: trdefi1985@gmail.com
+  - The wallet contracts use the ZeroDev Kernel v3.3 implementation at
+    0xd6CEDDe84be40893d153Be9d467CD6aD37875b28 (verified on BaseScan).
+
+Thank you for your help.
+
+--
+trdefi1985
