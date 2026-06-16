@@ -1,0 +1,29 @@
+# Security - Private keys and secrets
+*.pem
+*.key
+*.p12
+*.pfx
+*.env
+config.env
+
+# Sensitive files
+*.secret
+*.credentials
+secrets.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Screenshots (not for repo)
+Ekran g*.png
+*.png
+
+# Logs
+*.log
