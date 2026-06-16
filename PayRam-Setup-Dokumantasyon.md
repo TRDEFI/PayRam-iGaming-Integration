@@ -391,6 +391,12 @@ docker exec payram psql -U payram -d payram -c 'SELECT id, config_key, config_va
 - **Sorun:** redis-server container FATAL durumda
 - **Etki:** Testnet için önemli değil, production'da çözülmeli
 
+### 8.6 Sweep Fee Belirsizliği (2026-06-16 Toplantı)
+- **PayRam'iddia:** %2.5 fee onlara ait
+- **Bizim gözlemimiz:** MetaMask blockchain explorer'da farklı görünüyor
+- **Durum:** Testnet'te exclusion olabilir, mainnet'te alınıyor olabilir
+- **Çözüm:** Mainnet'te küçük bir test ($10-20) yapılarak gerçek fee ölçülmeli
+
 ---
 
 ## 9. Production'a Geçiş Kontrol Listesi

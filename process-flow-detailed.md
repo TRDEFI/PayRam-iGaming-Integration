@@ -415,3 +415,63 @@ Self-hosted PayRam node'da **Cards onramp zaten aktif**:
 - **Payment Sayfası:** Tüm ödeme seçenekleri görünüyor ✅
 
 > Detaylı dokümantasyon: `PayRam-Setup-Dokumantasyon.md`
+
+---
+
+## 8. TOPLANTI NOTLARI (2026-06-16 — PayRam Teknik Ekip)
+
+### 8.1 Toplantı Özeti
+- **Tarih:** 2026-06-16
+- **Katılımcılar:** PayRam teknik ekip + Biz
+- **Konu:** B2C+B2B crypto payment platformu, sweep fee, onramp, multi-chain
+
+### 8.2 Öğrenilen Bilgiler
+
+#### Sweep Fee Konusu
+- PayRam ekibi: `%2.5 fee onlara ait` diyor
+- Bizim gözlemimiz: MetaMask blockchain explorer'da farklı görünüyor
+- **Durum:** Testnet'te exclusion olabilir, mainnet'te alınıyor olabilir
+- **Çözüm:** Mainnet'te küçük bir test ($10-20) yapılarak gerçek fee ölçülmeli
+
+#### Onramp Provider'lar
+- **MoonPay:** Ana onramp partneri (ancak CSP sorunu var)
+- **Transak:** Alternatif partner
+- **AlchemyPay:** Diğer alternatif
+- **Smart routing:** Ülke/tutar/yöntem'e göre en iyi provider otomatik seçilir
+
+#### Multi-chain Destek
+| Zincir | Tokenlar | Durum |
+|--------|----------|-------|
+| **Bitcoin** | BTC | ✅ Aktif |
+| **Ethereum** | ETH, USDT, USDC | ✅ Aktif |
+| **Base** | ETH, USDC, cbBTC | ✅ Aktif |
+| **Polygon** | USDT, USDC, POL | ✅ Aktif |
+| **Tron** | TRX, USDT | ✅ Aktif |
+| **Solana** | SOL, USDC | ⏳ Roadmap'te |
+| **TON** | TON | ⏳ Roadmap'te |
+
+#### Onramp Chain Kısıtı
+- Card-to-crypto sadece **Base chain'inde** çalışıyor
+- Diğer zincirlerde kart ödemesi aktif değil
+
+### 8.3 B2B İş Modeli
+
+#### Komisyon Yapısı
+```
+B2B müşterinin kendi müşterileri:
+  Kart → Crypto alımı → Crypto'yu bir yere transfer eder
+    → Bizim %0.1-0.5 komisyonumuz ZATEN çalışır
+    → Çift komisyon almaya gerek yok
+```
+
+#### B2B Yaklaşımı
+- **BAŞLANGIC:** Sadece B2C (bireysel kullanıcılar)
+- **B2B TALEP GELİRSE:** Hetzner'dan ayrı VPS kiralama (on-demand)
+- **LANDING PAGE:** B2B için çok detaylı pazarlama stratejisi
+  - Görsel ve yazılı anlatım çok iyi ve net olmalı
+
+### 8.4 Çözülmemiş Konular
+1. **Sweep fee netleştirmesi** — %2.5 gerçekten PayRam'a mı ait? Mainnet'te test edilmeli
+2. **B2B landing page tasarımı** — Detaylı pazarlama stratejisi
+3. **MoonPay CSP sorunu** — Domain allowlist eksik (PayRam sorumlu)
+4. **Changelly widget** — Self-hosted'ta yüklenmiyor

@@ -1138,6 +1138,7 @@ $5000+           Enhanced?     Ek doğrulama          ?
 | **Off-ramp availability** | Waitlist'te | PayRam sales'a sor, alternative olarak 3rd-party off-ramp hazırla |
 | **Multi-chain card support** | Şu anda sadece Base | PayRam roadmap'ini takip et |
 | **iGaming-specific KYC rules** | Bazı ülkelerde iGaming için özel KYC | Hukuk danışmanı + PayRam sales ile doğrula |
+| **Sweep fee netleştirmesi** | %2.5 PayRam'a ait mi? Testnet exclusion var mı? | Mainnet'te test edilmeli |
 
 ### 15.2 Teknik Riskler
 
