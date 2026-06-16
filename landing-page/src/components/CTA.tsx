@@ -10,29 +10,71 @@ export default function CTA() {
   }, []);
 
   return (
-    <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 bg-black/30">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className={`text-3xl md:text-5xl font-bold text-white mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          Kripto Ödemelerin Geleceğine <span className="text-gradient">Adım Atın</span>
+    <section id="cta" className="section-padding relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-[#12121a] to-[#0a0a0f]" />
+      
+      {/* Glow Effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#f59e0b]/10 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Badge */}
+        <div className={`inline-flex items-center gap-2 bg-[#1a1a25] border border-[rgba(245,158,11,0.2)] rounded-full px-5 py-2 mb-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="w-2 h-2 bg-[#10b981] rounded-full animate-pulse" />
+          <span className="text-[#94a3b8] text-sm font-medium">Şimdi Başlayın</span>
+        </div>
+
+        {/* Headline */}
+        <h2 className={`text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ fontFamily: 'var(--font-display)' }}>
+          Kripto Ödemelerin<br />
+          <span className="text-gradient">Geleceğine</span> Adım Atın
         </h2>
-        <p className={`text-xl text-gray-300 mb-8 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+
+        {/* Subheadline */}
+        <p className={`text-xl md:text-2xl text-[#94a3b8] mb-12 max-w-2xl mx-auto transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           Bireysel kullanıcılar ve işletmeler için tasarlanmış güçlü kripto ödeme altyapısı. Hemen başlayın.
         </p>
-        <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+
+        {/* CTAs */}
+        <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <a
             href="https://payram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-orange-500 hover:bg-orange-600 text-black px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/25"
+            className="btn-primary text-lg px-8 py-4"
           >
             Ücretsiz Başla
           </a>
           <a
             href="mailto:info@trdefi.com"
-            className="border border-orange-500/50 hover:border-orange-500 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:bg-orange-500/10"
+            className="btn-secondary text-lg px-8 py-4"
           >
             İletişime Geç
           </a>
+        </div>
+
+        {/* Trust Indicators */}
+        <div className={`flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 transition-all duration-700 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="flex items-center gap-2 text-[#64748b] text-sm">
+            <svg className="w-5 h-5 text-[#10b981]" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>Kredi kartı gerekmez</span>
+          </div>
+          <div className="flex items-center gap-2 text-[#64748b] text-sm">
+            <svg className="w-5 h-5 text-[#10b981]" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>10 dakikada canlı</span>
+          </div>
+          <div className="flex items-center gap-2 text-[#64748b] text-sm">
+            <svg className="w-5 h-5 text-[#10b981]" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>7/24 destek</span>
+          </div>
         </div>
       </div>
     </section>

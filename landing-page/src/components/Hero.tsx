@@ -22,94 +22,172 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden min-h-screen gradient-mesh">
       <Navbar />
       
-      {/* 3D Background Elements */}
+      {/* Gradient Mesh Background */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Animated gradient orbs */}
         <div 
-          className="absolute top-20 left-10 w-72 h-72 bg-orange-500/20 rounded-full blur-3xl animate-float"
-          style={{ transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)` }}
-        />
-        <div 
-          className="absolute bottom-20 right-10 w-96 h-96 bg-orange-600/15 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "2s", transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)` }}
-        />
-        <div 
-          className="absolute top-1/2 left-1/2 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "4s", transform: `translate(-50%, -50%) translate(${mousePosition.x * 0.2}px, ${mousePosition.y * 0.2}px)` }}
+          className="absolute top-0 left-0 w-full h-full opacity-30"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 20% 40%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+              radial-gradient(ellipse 50% 50% at 50% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 50%)
+            `
+          }}
         />
         
-        {/* 3D Grid Lines */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-orange-500/30 to-transparent" />
-          <div className="absolute top-0 left-2/4 w-px h-full bg-gradient-to-b from-transparent via-orange-500/30 to-transparent" />
-          <div className="absolute top-0 left-3/4 w-px h-full bg-gradient-to-b from-transparent via-orange-500/30 to-transparent" />
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent" />
-          <div className="absolute top-2/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent" />
-          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent" />
-        </div>
+        {/* Grid Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(245, 158, 11, 0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(245, 158, 11, 0.5) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px'
+          }}
+        />
       </div>
 
       <div className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center">
-          {/* 3D Card with Motion */}
-          <div className={`perspective-1000 mb-12 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div 
-              className="inline-block p-1 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 rounded-2xl animate-pulse-glow"
-              style={{ transform: `rotateX(${mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.1}deg)` }}
-            >
-              <div className="bg-black/80 backdrop-blur-sm rounded-2xl px-8 py-4">
-                <span className="text-orange-400 font-semibold">PayRam Altyapısı ile Güçlendirildi</span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+          {/* Left Column - Content */}
+          <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#1a1a25] border border-[rgba(245,158,11,0.2)] rounded-full px-4 py-2 mb-8">
+              <div className="w-2 h-2 bg-[#10b981] rounded-full animate-pulse"></div>
+              <span className="text-[#94a3b8] text-sm font-medium">PayRam Altyapısı ile Güçlendirildi</span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-[0.95] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+              Kripto
+              <br />
+              Ödemelerin
+              <br />
+              <span className="text-gradient">Geleceği</span>
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl text-[#94a3b8] mb-10 max-w-lg leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
+              Bireysel kullanıcılar için kolay kripto alım-satım, işletmeler için güçlü B2B ödeme altyapısı.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a 
+                href="#cta" 
+                className="btn-primary text-center text-lg"
+              >
+                Ücretsiz Başla
+              </a>
+              <a 
+                href="#how-it-works" 
+                className="btn-secondary text-center text-lg"
+              >
+                Nasıl Çalışır?
+              </a>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex items-center gap-8 mt-12 text-sm text-[#64748b]">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-[#10b981]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>KYC Gerekmez</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-[#10b981]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>10 Dakikada Canlı</span>
               </div>
             </div>
           </div>
 
-          <h1 className={`text-4xl md:text-7xl font-bold text-white mb-6 transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Kripto Ödemelerin{" "}
-            <span className="text-gradient">Geleceği</span>
-          </h1>
-          
-          <p className={`text-xl text-gray-300 mb-8 max-w-3xl mx-auto transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Bireysel kullanıcılar için kolay kripto alım-satım, işletmeler için güçlü B2B ödeme altyapısı. Tek platformda, tek noktadan.
-          </p>
-          
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <a href="#cta" className="bg-orange-500 hover:bg-orange-600 text-black px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/25">
-              Ücretsiz Başla
-            </a>
-            <a href="#how-it-works" className="border border-orange-500/50 hover:border-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-orange-500/10">
-              Nasıl Çalışır?
-            </a>
+          {/* Right Column - Visual */}
+          <div className={`relative transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            {/* Main Card */}
+            <div className="relative bg-[#12121a] border border-[rgba(245,158,11,0.2)] rounded-3xl p-8 shadow-2xl">
+              {/* Card Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#f59e0b] to-[#d97706] rounded-xl flex items-center justify-center">
+                    <span className="text-black font-bold">₿</span>
+                  </div>
+                  <div>
+                    <div className="text-white font-semibold">BTC/USDC</div>
+                    <div className="text-[#64748b] text-sm">Bitcoin</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[#10b981] text-xl font-bold">+2.4%</div>
+                  <div className="text-[#64748b] text-sm">24s</div>
+                </div>
+              </div>
+
+              {/* Price Display */}
+              <div className="bg-[#0a0a0f] rounded-2xl p-6 mb-6">
+                <div className="text-[#64748b] text-sm mb-2">Güncel Fiyat</div>
+                <div className="text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-mono)' }}>
+                  $67,842.50
+                </div>
+                <div className="text-[#10b981] text-sm mt-1">+$1,592.30 (2.40%)</div>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="grid grid-cols-2 gap-4">
+                <button className="bg-[#10b981] hover:bg-[#059669] text-white py-4 rounded-xl font-semibold transition-all">
+                  Al
+                </button>
+                <button className="bg-[#ef4444] hover:bg-[#dc2626] text-white py-4 rounded-xl font-semibold transition-all">
+                  Sat
+                </button>
+              </div>
+
+              {/* Supported Assets */}
+              <div className="flex items-center justify-center gap-4 mt-6 pt-6 border-t border-[rgba(255,255,255,0.05)]">
+                <span className="text-[#64748b] text-sm">Desteklenen:</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[#f59e0b]">BTC</span>
+                  <span className="text-[#627eea]">ETH</span>
+                  <span className="text-[#2775CA]">USDC</span>
+                  <span className="text-[#8247e5]">POL</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Stats */}
+            <div className="absolute -top-6 -right-6 bg-[#1a1a25] border border-[rgba(245,158,11,0.2)] rounded-2xl p-4 shadow-xl animate-float">
+              <div className="text-[#10b981] text-2xl font-bold">+12.5%</div>
+              <div className="text-[#64748b] text-xs">Bu Ay</div>
+            </div>
+
+            <div className="absolute -bottom-4 -left-4 bg-[#1a1a25] border border-[rgba(245,158,11,0.2)] rounded-2xl p-4 shadow-xl animate-float" style={{ animationDelay: '2s' }}>
+              <div className="text-white text-lg font-bold">850K+</div>
+              <div className="text-[#64748b] text-xs">İşlem</div>
+            </div>
           </div>
         </div>
 
-        {/* 3D Stats Cards */}
-        <div className={`mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="card-3d bg-black/60 backdrop-blur-sm border border-orange-500/20 rounded-2xl p-8 text-center hover:border-orange-500/50 transition-all duration-500">
-            <div className="text-5xl font-bold text-orange-400 mb-3">$100M+</div>
-            <div className="text-gray-400 text-lg">İşlem Hacmi</div>
-          </div>
-          <div className="card-3d bg-black/60 backdrop-blur-sm border border-orange-500/20 rounded-2xl p-8 text-center hover:border-orange-500/50 transition-all duration-500" style={{ animationDelay: "0.2s" }}>
-            <div className="text-5xl font-bold text-amber-400 mb-3">850K+</div>
-            <div className="text-gray-400 text-lg">Zincir Üzerinde İşlem</div>
-          </div>
-          <div className="card-3d bg-black/60 backdrop-blur-sm border border-orange-500/20 rounded-2xl p-8 text-center hover:border-orange-500/50 transition-all duration-500" style={{ animationDelay: "0.4s" }}>
-            <div className="text-5xl font-bold text-yellow-400 mb-3">190+</div>
-            <div className="text-gray-400 text-lg">Ülke Desteği</div>
-          </div>
-        </div>
-
-        {/* Floating 3D Elements */}
-        <div className="absolute top-40 left-10 animate-float" style={{ animationDelay: "1s" }}>
-          <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl rotate-12 opacity-30" />
-        </div>
-        <div className="absolute bottom-40 right-20 animate-float" style={{ animationDelay: "3s" }}>
-          <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full -rotate-12 opacity-20" />
-        </div>
-        <div className="absolute top-60 right-40 animate-float" style={{ animationDelay: "5s" }}>
-          <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg rotate-45 opacity-25" />
+        {/* Stats Bar */}
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {[
+            { value: "$100M+", label: "İşlem Hacmi" },
+            { value: "850K+", label: "Zincir Üzerinde İşlem" },
+            { value: "190+", label: "Ülke Desteği" },
+            { value: "%99.9", label: "Uptime" },
+          ].map((stat, index) => (
+            <div key={index} className="text-center p-6 bg-[#12121a] border border-[rgba(245,158,11,0.1)] rounded-2xl">
+              <div className="text-3xl md:text-4xl font-bold text-gradient mb-2" style={{ fontFamily: 'var(--font-mono)' }}>
+                {stat.value}
+              </div>
+              <div className="text-[#64748b] text-sm">{stat.label}</div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

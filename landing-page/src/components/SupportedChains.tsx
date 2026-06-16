@@ -83,88 +83,121 @@ export default function SupportedChains() {
       name: "Bitcoin",
       symbol: "BTC",
       logo: <BitcoinLogo />,
-      color: "from-orange-500 to-yellow-500",
       status: "active",
+      txExample: "10 dk onay",
     },
     {
       name: "Ethereum",
       symbol: "ETH",
       logo: <EthereumLogo />,
-      color: "from-blue-500 to-purple-500",
       status: "active",
+      txExample: "12 sn onay",
     },
     {
       name: "Base",
       symbol: "USDC",
       logo: <BaseLogo />,
-      color: "from-blue-400 to-blue-600",
       status: "active",
+      txExample: "2 sn onay",
     },
     {
       name: "Polygon",
       symbol: "POL",
       logo: <PolygonLogo />,
-      color: "from-purple-500 to-purple-700",
       status: "active",
+      txExample: "2 sn onay",
     },
     {
       name: "Tron",
       symbol: "TRX",
       logo: <TronLogo />,
-      color: "from-red-500 to-red-700",
       status: "active",
+      txExample: "3 sn onay",
     },
     {
       name: "Solana",
       symbol: "SOL",
       logo: <SolanaLogo />,
-      color: "from-green-400 to-green-600",
       status: "roadmap",
+      txExample: "400ms onay",
     },
     {
       name: "TON",
       symbol: "TON",
       logo: <TonLogo />,
-      color: "from-cyan-400 to-cyan-600",
       status: "roadmap",
+      txExample: "5 sn onay",
     },
   ];
 
   return (
-    <section id="chains" className="py-20 px-4 sm:px-6 lg:px-8 bg-black/30">
-      <div className="max-w-7xl mx-auto">
+    <section id="chains" className="section-padding relative">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-[#12121a] to-[#0a0a0f]" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-16">
-          <h2 className={`text-3xl md:text-5xl font-bold text-white mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Desteklenen <span className="text-gradient">Ağlar</span>
+          <div className="inline-flex items-center gap-2 bg-[#1a1a25] border border-[rgba(245,158,11,0.2)] rounded-full px-5 py-2 mb-6">
+            <svg className="w-5 h-5 text-[#f59e0b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+            </svg>
+            <span className="text-[#f59e0b] text-sm font-semibold tracking-wide">DESTEKLENEN AĞLAR</span>
+          </div>
+          
+          <h2 className={`text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ fontFamily: 'var(--font-display)' }}>
+            Tüm <span className="text-gradient">Blockchain</span>'lerde
           </h2>
-          <p className={`text-gray-400 text-lg max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <p className={`text-[#94a3b8] text-xl max-w-3xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Tüm büyük blockchain ağlarında kripto alım-satım yapın.
           </p>
         </div>
 
+        {/* Chains Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {chains.map((chain, index) => (
             <div
               key={index}
-              className={`chain-icon card-3d bg-gradient-to-br ${chain.color} rounded-2xl p-6 text-center ${
-                chain.status === "roadmap" ? "opacity-70" : ""
-              } transition-all duration-500 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
+              className={`group bg-[#12121a] border border-[rgba(245,158,11,0.1)] rounded-2xl p-6 text-center hover:border-[rgba(245,158,11,0.3)] transition-all duration-500 ${
+                chain.status === "roadmap" ? "opacity-60" : ""
+              } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+              {/* Logo */}
+              <div className="w-16 h-16 mx-auto mb-4 bg-[#1a1a25] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                 {chain.logo}
               </div>
-              <div className="text-xl font-bold text-white">{chain.name}</div>
-              <div className="text-white/80 text-sm mt-1">{chain.symbol}</div>
-              {chain.status === "roadmap" && (
-                <div className="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">
-                  Yakında
+              
+              {/* Info */}
+              <div className="text-xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
+                {chain.name}
+              </div>
+              <div className="text-[#94a3b8] text-sm mb-3">{chain.symbol}</div>
+              
+              {/* Status */}
+              {chain.status === "active" ? (
+                <div className="inline-flex items-center gap-2 bg-[#10b981]/10 text-[#10b981] text-xs font-medium px-3 py-1 rounded-full">
+                  <div className="w-1.5 h-1.5 bg-[#10b981] rounded-full animate-pulse" />
+                  Aktif
+                </div>
+              ) : (
+                <div className="inline-flex items-center gap-2 bg-[#f59e0b]/10 text-[#f59e0b] text-xs font-medium px-3 py-1 rounded-full">
+                  <div className="w-1.5 h-1.5 bg-[#f59e0b] rounded-full" />
+                  Roadmap
                 </div>
               )}
+              
+              {/* TX Example */}
+              <div className="mt-3 text-[#64748b] text-xs">{chain.txExample}</div>
             </div>
           ))}
+        </div>
+
+        {/* Bottom Note */}
+        <div className={`mt-12 text-center transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <p className="text-[#64748b] text-sm">
+            Solana ve TON yakında ekleniyor. Tüm zincirler testnet&apos;te aktif olarak test edilmektedir.
+          </p>
         </div>
       </div>
     </section>
