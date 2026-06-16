@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PayRam - Kripto Ödemelerin Geleceği",
+  title: "TRDEFI - Kripto Ödemelerin Geleceği",
   description:
-    "Bireysel kullanıcılar için kolay kripto alım-satım, işletmeler için güçlü B2B ödeme altyapısı.",
+    "Bireysel kullanıcılar için kolay kripto alım-satım, işletmeler için güçlü B2B ödeme altyapısı. PayRam altyapısı ile güçlendirildi.",
 };
 
 export default function RootLayout({
