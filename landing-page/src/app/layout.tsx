@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "./custom.css";
 
 const newsreader = Newsreader({
   variable: "--font-newsreader",
