@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function Navbar() {
+export default function Navbar({ onOpenPopup }: { onOpenPopup?: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -62,9 +62,9 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="hidden md:block">
-            <a href="#cta" className="btn-primary text-sm px-4 py-2">
+            <button onClick={onOpenPopup} className="btn-primary text-sm px-4 py-2">
               Hemen Başla
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -101,7 +101,7 @@ export default function Navbar() {
             <a href="#pricing" className="text-[#94a3b8] hover:text-[#f59e0b] block px-3 py-2 rounded-md text-base font-medium">Fiyatlandırma</a>
             <a href="#chains" className="text-[#94a3b8] hover:text-[#f59e0b] block px-3 py-2 rounded-md text-base font-medium">Ağlar</a>
             <a href="#faq" className="text-[#94a3b8] hover:text-[#f59e0b] block px-3 py-2 rounded-md text-base font-medium">SSS</a>
-            <a href="#cta" className="btn-primary block text-center mt-4">Hemen Başla</a>
+            <button onClick={onOpenPopup} className="btn-primary block text-center mt-4">Hemen Başla</button>
           </div>
         </div>
       )}

@@ -27,3 +27,6 @@ Ekran g*.png
 
 # Logs
 *.log
+
+# Local Netlify folder
+.netlify

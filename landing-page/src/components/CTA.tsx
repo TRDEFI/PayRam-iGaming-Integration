@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function CTA() {
+export default function CTA({ onOpenPopup }: { onOpenPopup: () => void }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -39,14 +39,12 @@ export default function CTA() {
 
         {/* CTAs */}
         <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <a
-            href="https://payram.com"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={onOpenPopup}
             className="btn-primary text-lg px-8 py-4"
           >
             Ücretsiz Başla
-          </a>
+          </button>
           <a
             href="mailto:info@trdefi.com"
             className="btn-secondary text-lg px-8 py-4"

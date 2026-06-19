@@ -1,0 +1,20 @@
+[build]
+  publish = "out"
+  functions = "functions"
+  command = "echo 'Already built locally'"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = []
+
+[context.production.environment]
+  POLY_BUILDER_API_KEY = "019ee0e1-56cd-7278-95ef-a4360b528cc1"
+  POLY_BUILDER_SECRET = "Z0qRuND0akAr9WYzDJtQkVVDm8fYY-2GLkJpIeMvNE="
+  POLY_BUILDER_PASSPHRASE = "cf04dc2ff1913709ca5c0c48bb49b00ec1ef83c2181b8c5c1f48ecdddf8a4edb"
+  POLY_BUILDER_NAME = "opencode"
+  POLY_BUILDER_ADDRESS = "0x305f27e7c017f01fe390355a27706bc95caffc54"
+  POLY_BUILDER_CODE = "0x3bbd3c04f3af8c1242b77cd7c0e7b5df8b6639c219bd22a21fce38406d02b631"
+  RELAYER_API_KEY = "019ee0e0-b147-79d2-aa08-64d314b4651e"
+  RELAYER_API_KEY_ADDRESS = "0xd718cf6e3c7e5e7490c00742872e4be7139c2205"
+  PAYRAM_API_KEY = "2f31ed780b37c0fcfbde48a0764aa5b8"
+  PAYRAM_DASHBOARD_URL = "https://payram-staging.yourdomain.com"

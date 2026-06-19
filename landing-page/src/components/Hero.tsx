@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 
-export default function Hero() {
+export default function Hero({ onOpenPopup }: { onOpenPopup: () => void }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -23,7 +23,7 @@ export default function Hero() {
 
   return (
     <div className="relative overflow-hidden min-h-screen gradient-mesh">
-      <Navbar />
+      <Navbar onOpenPopup={onOpenPopup} />
       
       {/* Gradient Mesh Background */}
       <div className="absolute inset-0 overflow-hidden">
@@ -77,12 +77,12 @@ export default function Hero() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <a 
-                href="#cta" 
+              <button 
+                onClick={onOpenPopup}
                 className="btn-primary text-center text-lg"
               >
                 Ücretsiz Başla
-              </a>
+              </button>
               <a 
                 href="#how-it-works" 
                 className="btn-secondary text-center text-lg"

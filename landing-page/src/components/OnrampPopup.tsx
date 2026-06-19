@@ -46,7 +46,13 @@ export default function OnrampPopup({ isOpen, onClose }: OnrampPopupProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <style>{`
+        .onramp-scroll::-webkit-scrollbar { width: 6px; }
+        .onramp-scroll::-webkit-scrollbar-track { background: #1f2937; border-radius: 3px; }
+        .onramp-scroll::-webkit-scrollbar-thumb { background: #f97316; border-radius: 3px; }
+        .onramp-scroll::-webkit-scrollbar-thumb:hover { background: #ea580c; }
+      `}</style>
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
@@ -54,7 +60,7 @@ export default function OnrampPopup({ isOpen, onClose }: OnrampPopupProps) {
       />
 
       {/* Popup */}
-      <div className="relative w-full max-w-lg mx-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl border border-orange-500/20 shadow-2xl shadow-orange-500/10 overflow-hidden">
+      <div className="relative w-full max-w-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl border border-orange-500/20 shadow-2xl shadow-orange-500/10 flex flex-col max-h-[90vh] overflow-hidden">
         {/* Close Button */}
         <button
           onClick={handleClose}
@@ -66,7 +72,7 @@ export default function OnrampPopup({ isOpen, onClose }: OnrampPopupProps) {
         </button>
 
         {/* Header */}
-        <div className="px-6 pt-6 pb-4">
+        <div className="px-6 pt-6 pb-4 shrink-0">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 grid grid-cols-2 gap-0.5">
               <div className="bg-orange-500 rounded-full flex items-center justify-center text-white text-[8px] font-bold">T</div>
@@ -80,7 +86,7 @@ export default function OnrampPopup({ isOpen, onClose }: OnrampPopupProps) {
         </div>
 
         {/* Step Indicator */}
-        <div className="px-6 pb-4">
+        <div className="px-6 pb-4 shrink-0">
           <div className="flex items-center gap-2">
             {["auth", "wallet", "deposit", "confirmation"].map((step, index) => (
               <div key={step} className="flex items-center gap-2">
@@ -122,7 +128,7 @@ export default function OnrampPopup({ isOpen, onClose }: OnrampPopupProps) {
         </div>
 
         {/* Content */}
-        <div className="px-6 pb-6">
+        <div className="px-6 pb-6 overflow-y-auto flex-1 min-h-0 onramp-scroll" style={{ scrollbarWidth: 'thin', scrollbarColor: '#f97316 #1f2937' }}>
           {currentStep === "auth" && (
             <AuthStep
               userData={userData}
@@ -186,11 +192,23 @@ function AuthStep({
     if (!email || !name) return;
 
     setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setUserData({ ...userData, email, name });
-    setIsLoading(false);
-    onNext();
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: "trdefi-user", name }),
+      });
+      const data = await res.json();
+      if (data.token) {
+        localStorage.setItem("trdefi_token", data.token);
+      }
+      setUserData({ ...userData, email, name });
+      onNext();
+    } catch {
+      alert("Kayıt hatası. Lütfen tekrar deneyin.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -202,10 +220,23 @@ function AuthStep({
         type="button"
         onClick={async () => {
           setIsLoading(true);
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          setUserData({ email: "demo@trdefi.com", name: "Demo Kullanıcı" });
-          setIsLoading(false);
-          onNext();
+          try {
+            const res = await fetch("/api/auth/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: "demo@trdefi.com", password: "trdefi-user", name: "Demo Kullanıcı" }),
+            });
+            const data = await res.json();
+            if (data.token) {
+              localStorage.setItem("trdefi_token", data.token);
+            }
+            setUserData({ email: "demo@trdefi.com", name: "Demo Kullanıcı" });
+            onNext();
+          } catch {
+            alert("Giriş hatası.");
+          } finally {
+            setIsLoading(false);
+          }
         }}
         disabled={isLoading}
         className="w-full flex items-center justify-center gap-3 bg-white text-gray-900 px-4 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors disabled:opacity-50 mb-4"
@@ -287,16 +318,40 @@ function WalletStep({
   setIsLoading: (loading: boolean) => void;
 }) {
   const [walletAddress, setWalletAddress] = useState("");
+  const [bridgeAddresses, setBridgeAddresses] = useState<{ evm?: string; svm?: string; btc?: string }>({});
 
   useEffect(() => {
     const createWallet = async () => {
       setIsLoading(true);
-      // Simulate wallet creation via Relayer
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const mockAddress = "0x" + Array.from({ length: 40 }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join("");
-      setWalletAddress(mockAddress);
-      setUserData({ ...userData, walletAddress: mockAddress });
-      setIsLoading(false);
+      try {
+        // Generate a deterministic address from user email (in production, use proper wallet)
+        const seed = userData.email || "default@trdefi.com";
+        const mockAddress = "0x" + Array.from({ length: 40 }, (_, i) => {
+          const charCode = seed.charCodeAt(i % seed.length);
+          return "0123456789abcdef"[(charCode + i) % 16];
+        }).join("");
+        
+        setWalletAddress(mockAddress);
+        setUserData({ ...userData, walletAddress: mockAddress });
+
+        // Get real Bridge API deposit addresses
+        const res = await fetch("/api/bridge/deposit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ address: mockAddress }),
+        });
+        const data = await res.json();
+        if (data.address) {
+          setBridgeAddresses(data.address);
+        }
+      } catch {
+        // Fallback to mock address
+        const mockAddress = "0x" + Array.from({ length: 40 }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join("");
+        setWalletAddress(mockAddress);
+        setUserData({ ...userData, walletAddress: mockAddress });
+      } finally {
+        setIsLoading(false);
+      }
     };
     createWallet();
   }, []);
@@ -331,6 +386,27 @@ function WalletStep({
             <p className="text-gray-400 text-sm mb-2">Cüzdan Adresiniz:</p>
             <p className="text-white font-mono text-sm break-all">{walletAddress}</p>
           </div>
+
+          {bridgeAddresses.evm && (
+            <div className="bg-gray-800 rounded-xl p-4">
+              <p className="text-gray-400 text-sm mb-2">Bridge Deposit Adresi (EVM):</p>
+              <p className="text-white font-mono text-sm break-all">{bridgeAddresses.evm}</p>
+            </div>
+          )}
+
+          {bridgeAddresses.btc && (
+            <div className="bg-gray-800 rounded-xl p-4">
+              <p className="text-gray-400 text-sm mb-2">Bridge Deposit Adresi (BTC):</p>
+              <p className="text-white font-mono text-sm break-all">{bridgeAddresses.btc}</p>
+            </div>
+          )}
+
+          {bridgeAddresses.svm && (
+            <div className="bg-gray-800 rounded-xl p-4">
+              <p className="text-gray-400 text-sm mb-2">Bridge Deposit Adresi (SOL):</p>
+              <p className="text-white font-mono text-sm break-all">{bridgeAddresses.svm}</p>
+            </div>
+          )}
 
           <div className="bg-gray-800/50 rounded-xl p-4">
             <p className="text-gray-400 text-sm">
@@ -377,6 +453,8 @@ function DepositStep({
 }) {
   const [amount, setAmount] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
+  const [quote, setQuote] = useState<{ fee?: string; received?: string } | null>(null);
+  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
 
   const depositMethods = [
     {
@@ -432,15 +510,72 @@ function DepositStep({
     },
   ];
 
+  // Fetch real quote from Bridge API when amount changes
+  useEffect(() => {
+    const fetchQuote = async () => {
+      if (!amount || parseFloat(amount) < 2 || selectedMethod === "card" || selectedMethod === "applepay" || selectedMethod === "googlepay") {
+        setQuote(null);
+        return;
+      }
+      
+      setIsFetchingQuote(true);
+      try {
+        const res = await fetch("/api/bridge/quote", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fromAmount: (parseFloat(amount) * 1000000).toString(), // USDC has 6 decimals
+            fromChain: "137", // Polygon
+            fromToken: "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359", // USDC on Polygon
+            toChain: "137",
+            toToken: "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB", // pUSD on Polygon
+            recipientAddress: userData.walletAddress || "0x0000000000000000000000000000000000000000",
+          }),
+        });
+        const data = await res.json();
+        if (data.fee || data.receivedAmount) {
+          setQuote({ fee: data.fee, received: data.receivedAmount });
+        }
+      } catch {
+        // Fallback to estimated fee
+        setQuote({ fee: "~$0.003", received: (parseFloat(amount) - 0.003).toFixed(2) });
+      } finally {
+        setIsFetchingQuote(false);
+      }
+    };
+    fetchQuote();
+  }, [amount, selectedMethod, userData.walletAddress]);
+
   const handleDeposit = async () => {
     if (!amount || !selectedMethod) return;
     setIsLoading(true);
-    // Simulate deposit process
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    const mockTxHash = "0x" + Array.from({ length: 64 }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join("");
-    setUserData({ ...userData, depositAmount: parseFloat(amount), depositMethod: selectedMethod, transactionHash: mockTxHash });
-    setIsLoading(false);
-    onNext();
+    
+    try {
+      if (selectedMethod === "crypto") {
+        // For crypto transfer, we already have the deposit address
+        setUserData({ 
+          ...userData, 
+          depositAmount: parseFloat(amount), 
+          depositMethod: selectedMethod, 
+          transactionHash: "Waiting for deposit..." 
+        });
+      } else {
+        // For card/Apple Pay/Google Pay, create a mock tx for now
+        // In production, this would redirect to a payment provider
+        const mockTxHash = "0x" + Array.from({ length: 64 }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join("");
+        setUserData({ 
+          ...userData, 
+          depositAmount: parseFloat(amount), 
+          depositMethod: selectedMethod, 
+          transactionHash: mockTxHash 
+        });
+      }
+      onNext();
+    } catch {
+      alert("İşlem hatası. Lütfen tekrar deneyin.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const quickAmounts = [10, 25, 50, 100, 250, 500];
@@ -519,16 +654,29 @@ function DepositStep({
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-400">İşlem Ücreti</span>
             <span className="text-green-400">
-              {selectedMethod === "crypto" ? "~$0.003" : `$${(parseFloat(amount) * 0.0175).toFixed(2)}`}
+              {isFetchingQuote ? (
+                <span className="inline-flex items-center gap-1">
+                  <div className="w-3 h-3 border border-green-400 border-t-transparent rounded-full animate-spin" />
+                  Hesaplanıyor...
+                </span>
+              ) : selectedMethod === "crypto" ? (
+                quote?.fee || "~$0.003"
+              ) : (
+                `$${(parseFloat(amount) * 0.0175).toFixed(2)}`
+              )}
             </span>
           </div>
           <div className="h-px bg-gray-700 my-2" />
           <div className="flex justify-between">
             <span className="text-gray-400">Hesabınıza Geçecek</span>
             <span className="text-white font-bold">
-              ${selectedMethod === "crypto" 
-                ? (parseFloat(amount) - 0.003).toFixed(2) 
-                : (parseFloat(amount) * 0.9825).toFixed(2)}
+              {isFetchingQuote ? (
+                "..."
+              ) : selectedMethod === "crypto" ? (
+                `$${quote?.received || (parseFloat(amount) - 0.003).toFixed(2)}`
+              ) : (
+                `$${(parseFloat(amount) * 0.9825).toFixed(2)}`
+              )}
             </span>
           </div>
         </div>
@@ -596,6 +744,25 @@ function ConfirmationStep({
         <p className="text-gray-400 text-sm mb-2">İşlem Hash:</p>
         <p className="text-white font-mono text-xs break-all">{userData.transactionHash}</p>
       </div>
+
+      {userData.depositMethod === "crypto" && userData.walletAddress && (
+        <div className="bg-gray-800 rounded-xl p-4 mb-6 text-left">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-gray-400 text-sm">Para Gönderin:</p>
+          </div>
+          <p className="text-orange-400 text-xs mb-2">Aşağıdaki adrese kripto para gönderin:</p>
+          <p className="text-white font-mono text-xs break-all bg-gray-900 p-2 rounded">{userData.walletAddress}</p>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(userData.walletAddress || "");
+              alert("Adres kopyalandı!");
+            }}
+            className="mt-2 text-orange-500 hover:text-orange-400 text-xs font-semibold"
+          >
+            Adresi Kopyala
+          </button>
+        </div>
+      )}
 
       <div className="bg-gray-800 rounded-xl p-4 mb-6 text-left">
         <div className="flex items-center justify-between mb-2">
