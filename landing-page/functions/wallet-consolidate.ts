@@ -46,8 +46,8 @@ export default async (req: Request, context: Context) => {
       });
     }
 
-    const relayerApiKey = process.env.POLY_RELAYER_API_KEY;
-    const relayerApiKeyAddress = process.env.POLY_RELAYER_API_KEY_ADDRESS;
+    const relayerApiKey = process.env.RELAYER_API_KEY;
+    const relayerApiKeyAddress = process.env.RELAYER_API_KEY_ADDRESS;
 
     if (!relayerApiKey || !relayerApiKeyAddress) {
       return new Response(JSON.stringify({ error: "Relayer API not configured" }), {
