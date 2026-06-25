@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Newsreader, JetBrains_Mono } from "next/font/google";
+import { AuthProvider } from "@/contexts/AuthContext";
 import "./globals.css";
 import "./custom.css";
 
@@ -38,7 +39,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#0a0a0f]">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#0a0a0f]">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
